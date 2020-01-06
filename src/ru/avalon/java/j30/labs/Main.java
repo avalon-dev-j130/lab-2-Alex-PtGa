@@ -59,7 +59,7 @@ public class Main {
         /*
          * TODO #02 Реализуйте метод getUrl
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return "jdbc:derby://localhost:1527/Lab#2";
     }
     /**
      * Возвращает параметры соединения
