@@ -1,6 +1,7 @@
 package ru.avalon.java.j30.labs;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Properties;
@@ -71,7 +72,8 @@ public class Main {
         /*
          * TODO #03 Реализуйте метод getProperties
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+    Properties properties = new Properties();
+    
     }
     /**
      * Возвращает соединение с базой данных Sample
@@ -83,7 +85,10 @@ public class Main {
         /*
          * TODO #04 Реализуйте метод getConnection
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+       String url = getUrl();
+       String user = "sample";
+       String password = "sample";
+       return DriverManager.getConnection(url, user, password);
     }
     
 }
