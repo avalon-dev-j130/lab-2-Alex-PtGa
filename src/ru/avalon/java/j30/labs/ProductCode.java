@@ -138,7 +138,7 @@ public class ProductCode {
         /*
          * TODO #08 Реализуйте метод toString
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+         return super.toString();
     }
     /**
      * Возвращает запрос на выбор всех записей из таблицы PRODUCT_CODE 
@@ -149,8 +149,8 @@ public class ProductCode {
      */
     public static PreparedStatement getSelectQuery(Connection connection) throws SQLException {
         /*
-         * TODO #09 Реализуйте метод getSelectQuery
-         */
+        * TODO #09 Реализуйте метод getSelectQuery
+        */
         throw new UnsupportedOperationException("Not implemented yet!");
     }
     /**
