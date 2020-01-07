@@ -9,9 +9,10 @@ import java.util.Properties;
 /**
  * Лабораторная работа №3
  * <p>
- * Курс: "DEV-OCPJP. Подготовка к сдаче сертификационных экзаменов серии Oracle Certified Professional Java Programmer"
+ * Курс: "DEV-OCPJP. Подготовка к сдаче сертификационных экзаменов серии Oracle
+ * Certified Professional Java Programmer"
  * <p>
- * Тема: "JDBC - Java Database Connectivity" 
+ * Тема: "JDBC - Java Database Connectivity"
  *
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
@@ -19,7 +20,7 @@ public class Main {
 
     /**
      * Точка входа в приложение
-     * 
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
@@ -39,21 +40,23 @@ public class Main {
          * TODO #14 Средствами отладчика проверьте корректность работы программы
          */
     }
+
     /**
      * Выводит в кодсоль все коды товаров
-     * 
+     *
      * @param connection действительное соединение с базой данных
-     * @throws SQLException 
-     */    
+     * @throws SQLException
+     */
     private static void printAllCodes(Connection connection) throws SQLException {
         Collection<ProductCode> codes = ProductCode.all(connection);
         for (ProductCode code : codes) {
             System.out.println(code);
         }
     }
+
     /**
      * Возвращает URL, описывающий месторасположение базы данных
-     * 
+     *
      * @return URL в виде объекта класса {@link String}
      */
     private static String getUrl() {
@@ -62,26 +65,28 @@ public class Main {
          */
         return "jdbc:derby://localhost:1527/Lab#2";
     }
+
     /**
      * Возвращает параметры соединения
-     * 
-     * @return Объект класса {@link Properties}, содержащий параметры user и 
+     *
+     * @return Объект класса {@link Properties}, содержащий параметры user и
      * password
      */
     private static Properties getProperties() {
         /*
          * TODO #03 Реализуйте метод getProperties
          */
-    Properties properties = new Properties();
-    
-    }
-    /**
-     * Возвращает соединение с базой данных Sample
-     * 
-     * @return объект типа {@link Connection}
-     * @throws SQLException 
-     */
-    private static Connection getConnection() throws SQLException {
+   private static final String CONFIG =  "resurces\config.properties";
+    private static final Properties properties = new Properties();
+
+}
+/**
+ * Возвращает соединение с базой данных Sample
+ *
+ * @return объект типа {@link Connection}
+ * @throws SQLException
+ */
+private static Connection getConnection() throws SQLException {
         /*
          * TODO #04 Реализуйте метод getConnection
          */

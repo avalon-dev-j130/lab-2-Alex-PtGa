@@ -98,17 +98,19 @@ public class ProductCode {
     public void setDescription(String description) {
         this.description = description;
     }
+
     /**
      * Хеш-функция типа {@link ProductCode}.
      * 
      * @return Значение хеш-кода объекта типа {@link ProductCode}
      */
+
     @Override
     public int hashCode() {
         /*
          * TODO #06 Реализуйте метод hashCode
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+      return super.hashCode();
     }
     /**
      * Сравнивает некоторый произвольный объект с текущим объектом типа 
@@ -123,8 +125,9 @@ public class ProductCode {
         /*
          * TODO #07 Реализуйте метод equals
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+      return super.equals(obj);
     }
+    
     /**
      * Возвращает строковое представление кода товара.
      * 
