@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 
 /**
@@ -13,6 +14,10 @@ import java.util.Collection;
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
 public class ProductCode {
+
+    private static PreparedStatement getSelectQuery(ResultSet resultSet) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * Код товара
      */
@@ -151,7 +156,17 @@ public class ProductCode {
         /*
         * TODO #09 Реализуйте метод getSelectQuery
         */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        /**
+         * PreparedStatement
+         * Этот интерфейс используется в случае, когда мы планируем использовать SQL – выражения множество раз.
+         * Он принимает параметры во время работы программы.
+         */
+        String query = "SELECT * FROM PRODUCT_CODE";    // формирование запроса
+        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {       // 
+           try (ResultSet resultSet = statement.executeQuery(query)) {
+               return getSelectQuery(resultSet);
+           }
+        }
     }
     /**
      * Возвращает запрос на добавление записи в таблицу PRODUCT_CODE 

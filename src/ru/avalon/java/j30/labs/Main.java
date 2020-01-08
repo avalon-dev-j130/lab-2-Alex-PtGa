@@ -63,7 +63,10 @@ public class Main {
         /*
          * TODO #02 Реализуйте метод getUrl
          */
-        return "jdbc:derby://localhost:1527/Lab#2";
+        //  return "jdbc:derby://localhost:1527/Lab#2";
+        
+        final String CONFIGS = "resurces/config.properties";
+        return CONFIGS;
     }
 
     /**
@@ -73,12 +76,12 @@ public class Main {
      * password
      */
     private static Properties getProperties() {
+        Properties configs = new Properties();
+        
+        return configs;
         /*
          * TODO #03 Реализуйте метод getProperties
          */
-   private static final String CONFIG =  "resurces\config.properties";
-    private static final Properties properties = new Properties();
-
 }
 /**
  * Возвращает соединение с базой данных Sample
@@ -94,6 +97,5 @@ private static Connection getConnection() throws SQLException {
        String user = "sample";
        String password = "sample";
        return DriverManager.getConnection(url, user, password);
-    }
-    
+    }    
 }
