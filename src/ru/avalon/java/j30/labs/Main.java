@@ -76,13 +76,15 @@ public class Main {
      * password
      */
     private static Properties getProperties() {
-        Properties configs = new Properties();
-        
+       
+       Properties configs = new Properties();
+        configs.getProperty(getUrl());          
         return configs;
         /*
          * TODO #03 Реализуйте метод getProperties
          */
 }
+    // создание метода для чтения 
 /**
  * Возвращает соединение с базой данных Sample
  *
@@ -94,8 +96,9 @@ private static Connection getConnection() throws SQLException {
          * TODO #04 Реализуйте метод getConnection
          */
        String url = getUrl();
-       String user = "sample";
-       String password = "sample";
+//       String user = "sample";
+//       String password = "sample";
+//       String user = getProperties();
        return DriverManager.getConnection(url, user, password);
     }    
 }

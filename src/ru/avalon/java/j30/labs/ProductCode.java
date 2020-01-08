@@ -158,13 +158,13 @@ public class ProductCode {
         */
         /**
          * PreparedStatement
-         * Этот интерфейс используется в случае, когда мы планируем использовать SQL – выражения множество раз.
-         * Он принимает параметры во время работы программы.
+         * Этот интерфейс используется в случае, когда мы планируем использовать
+         * SQL – выражения множество раз. Он принимает параметры во время работы программы.
          */
         String query = "SELECT * FROM PRODUCT_CODE";    // формирование запроса
-        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {       // 
+        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {   // 
            try (ResultSet resultSet = statement.executeQuery(query)) {
-               return getSelectQuery(resultSet);
+               return getSelectQuery(resultSet);       // возвращение 
            }
         }
     }
