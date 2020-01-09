@@ -93,8 +93,7 @@ public class Main {
  // через экземпляр класса вызовем метод, который получит параметры user и password
        configs.getProperty(user, password);
 // возвратим созданный экземпляр соглассно задания
-       return configs;
-              
+       return configs;             
 }
 /**
  * Возвращает соединение с базой данных Sample
