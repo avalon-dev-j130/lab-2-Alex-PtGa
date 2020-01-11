@@ -25,7 +25,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, IOException {
-        /* 12345
+        /* 1234589
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
          */
         try (Connection connection = getConnection()) {
