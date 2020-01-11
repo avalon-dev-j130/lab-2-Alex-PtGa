@@ -29,13 +29,13 @@ public class Main {
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
          */
         try (Connection connection = getConnection()) {
-            ProductCode code = new ProductCode("MO", 'N', "Movies");
-            code.save(connection);
-            printAllCodes(connection);
-
-            code.setCode("MV");
-            code.save(connection);
-            printAllCodes(connection);
+//            ProductCode code = new ProductCode("MO", 'N', "Movies");
+//            code.save(connection);
+//            printAllCodes(connection);
+//
+//            code.setCode("MV");
+//            code.save(connection);
+//            printAllCodes(connection);
         }
         /*
          * TODO #14 Средствами отладчика проверьте корректность работы программы
@@ -65,8 +65,9 @@ public class Main {
          * TODO #02 Реализуйте метод getUrl
          */
         String url = "jdbc:derby://localhost:1527/Lab#2";  
+        System.out.println("есть соединение...");
         return url;
-        
+        // jdbc:derby://localhost:1527/Lab#2 [Sample on SAMPLE]
       //  final String CONFIGS = "resurces/config.properties";
       //  return CONFIGS;
     }
@@ -85,13 +86,14 @@ public class Main {
         
 // создадим экземпляр класса UsernamePassword и вызовем его методы 
       // через строковые параметры user и password
-       UsernamePassword db = new UsernamePassword();
-       String user = db.getUser();
-       String password = db.getPassword();
+//       UsernamePassword db = new UsernamePassword();
+//       String user = db.getUser();      // будет строка юзера
+//       String password = db.getPassword();  // будет строка пароля
  // создадим экземпляр класса  Properties
        Properties configs = new Properties();
- // через экземпляр класса вызовем метод, который получит параметры user и password
-       configs.getProperty(user, password);
+ 
+// через экземпляр класса вызовем метод, который получит параметры user и password
+//       configs.getProperty(user, password);
 // возвратим созданный экземпляр соглассно задания
        return configs;             
 }
@@ -106,8 +108,10 @@ private static Connection getConnection() throws SQLException, IOException {
          * TODO #04 Реализуйте метод getConnection
          */
         String url = getUrl();
-        Properties usnamePas = getProperties();
-     
-       return DriverManager.getConnection(url, usnamePas);
+//        Properties usnamePas = getProperties();
+       String user = "sample";
+       String password = "sample";
+       
+       return DriverManager.getConnection(url, user, password);
     }    
 }

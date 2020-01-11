@@ -219,9 +219,28 @@ public class ProductCode {
      */
     public void save(Connection connection) throws SQLException {
         /*
-         * TODO #13 Реализуйте метод convert
+         * TODO #13 Реализуйте метод save
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+// параметры String code, char discountCode, String description
+        try (Statement st = connection.createStatement()) {
+            String sql = "SELECT * FROM PRODUCT_CODE WHERE ID=" + code + ";";
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                //  такой объект есть, нужен UPDATE
+                System.out.println("Такой объект уже есть");
+                sql = "UPDATE PRODUCT SET code'" + code + "' discountCode = " + discountCode + "WHERE description = " + description +";";
+                int n = st.executeUpdate(sql);
+                System.out.println("Изменено " + n + " строк");
+            } else {
+                //  Это новый объект для таблицы, нужен INSERT
+                //   если есть строчный параметр, то переводит в строчный параметр строку
+                sql = "INSERT INTO PRODUCT_CODE VALUES (" + code + "," + discountCode + "'," + description + ");";
+                int r = st.executeUpdate(sql);
+                System.out.println("Вставлено " + r + "стр.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Ошибка в save " + ex.getMessage());
+        }
     }
     /**
      * Возвращает все записи таблицы PRODUCT_CODE в виде коллекции объектов

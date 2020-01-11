@@ -11,7 +11,7 @@ import java.util.Properties;
 // создадим класс для чтения properties файла
 public class UsernamePassword {
 
-    // создадим строчную переменную, которая принимает путь где находится файл
+    // создадим строковую переменную, которая принимает путь где находится файл
     // и экземпляр класса Properties
 private static final String CONFIG = "resurces/config.properties";
 private final Properties config = new Properties();
@@ -33,5 +33,6 @@ public UsernamePassword() throws IOException {
       String password = config.getProperty("database.password");
             return password;
     }
+    
 }
 
