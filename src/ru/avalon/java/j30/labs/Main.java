@@ -68,9 +68,7 @@ public class Main {
         String url = "jdbc:derby://localhost:1527/LabDb_2";
         System.out.println("есть url...");
         return url;
-        // jdbc:derby://localhost:1527/Lab#2 [Sample on SAMPLE]
-        //  final String CONFIGS = "resurces/config.properties";
-        //  return CONFIGS;
+        
     }
 
     /**
@@ -90,16 +88,6 @@ public class Main {
 
             configs.load(file);
         }
-// создадим экземпляр класса UsernamePassword и вызовем его методы 
-        // через строковые параметры user и password
-//       UsernamePassword db = new UsernamePassword();
-//       String user = db.getUser();      // будет строка юзера
-//       String password = db.getPassword();  // будет строка пароля
-// создадим экземпляр класса  Properties
-//       Properties configs = new Properties();
-
-// через экземпляр класса вызовем метод, который получит параметры user и password
-//       configs.getProperty(user, password);    <- это не правильно то что я делал
 // возвратим созданный экземпляр соглассно задания
         return configs;
     }
