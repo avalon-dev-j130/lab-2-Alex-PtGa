@@ -1,5 +1,6 @@
 package ru.avalon.java.j30.labs;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,8 +18,7 @@ import java.util.Properties;
  *
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
-public class Main {
-
+public class Main {    
     /**
      * Точка входа в приложение
      *
@@ -29,13 +29,14 @@ public class Main {
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
          */
         try (Connection connection = getConnection()) {
-//            ProductCode code = new ProductCode("MO", 'N', "Movies");
-//            code.save(connection);
-//            printAllCodes(connection);
-//
-//            code.setCode("MV");
-//            code.save(connection);
-//            printAllCodes(connection);
+            System.out.println("есть соединение...");
+            ProductCode code = new ProductCode("MO", 'N', "Movies");
+            code.save(connection);
+            printAllCodes(connection);
+
+            code.setCode("MV");
+            code.save(connection);
+            printAllCodes(connection);
         }
         /*
          * TODO #14 Средствами отладчика проверьте корректность работы программы
@@ -64,12 +65,12 @@ public class Main {
         /*
          * TODO #02 Реализуйте метод getUrl
          */
-        String url = "jdbc:derby://localhost:1527/Lab#2";  
-        System.out.println("есть соединение...");
+        String url = "jdbc:derby://localhost:1527/LabDb_2";
+        System.out.println("есть url...");
         return url;
         // jdbc:derby://localhost:1527/Lab#2 [Sample on SAMPLE]
-      //  final String CONFIGS = "resurces/config.properties";
-      //  return CONFIGS;
+        //  final String CONFIGS = "resurces/config.properties";
+        //  return CONFIGS;
     }
 
     /**
@@ -78,40 +79,47 @@ public class Main {
      * @return Объект класса {@link Properties}, содержащий параметры user и
      * password
      */
-  
+    private static final String CONFIG = "src\\resources\\config.properties";
+
     private static Properties getProperties() throws IOException {
-/*
+        /*
          * TODO #03 Реализуйте метод getProperties
-         */    
-        
+         */
+        Properties configs = new Properties();
+        try (FileInputStream file = new FileInputStream(CONFIG)) {
+
+            configs.load(file);
+        }
 // создадим экземпляр класса UsernamePassword и вызовем его методы 
-      // через строковые параметры user и password
+        // через строковые параметры user и password
 //       UsernamePassword db = new UsernamePassword();
 //       String user = db.getUser();      // будет строка юзера
 //       String password = db.getPassword();  // будет строка пароля
- // создадим экземпляр класса  Properties
-       Properties configs = new Properties();
- 
+// создадим экземпляр класса  Properties
+//       Properties configs = new Properties();
+
 // через экземпляр класса вызовем метод, который получит параметры user и password
-//       configs.getProperty(user, password);
+//       configs.getProperty(user, password);    <- это не правильно то что я делал
 // возвратим созданный экземпляр соглассно задания
-       return configs;             
-}
-/**
- * Возвращает соединение с базой данных Sample
- *
- * @return объект типа {@link Connection}
- * @throws SQLException
- */
-private static Connection getConnection() throws SQLException, IOException {
+        return configs;
+    }
+
+    /**
+     * Возвращает соединение с базой данных Sample
+     *
+     * @return объект типа {@link Connection}
+     * @throws SQLException
+     */
+    private static Connection getConnection() throws SQLException, IOException {
         /*
          * TODO #04 Реализуйте метод getConnection
          */
         String url = getUrl();
-//        Properties usnamePas = getProperties();
-       String user = "sample";
-       String password = "sample";
-       
-       return DriverManager.getConnection(url, user, password);
-    }    
+        Properties usnamePas = getProperties();
+
+        String user = usnamePas.getProperty("database.user");
+        String password = usnamePas.getProperty("database.password");
+
+        return DriverManager.getConnection(url, user, password);
+    }
 }
