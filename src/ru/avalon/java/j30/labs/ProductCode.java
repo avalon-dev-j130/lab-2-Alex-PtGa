@@ -164,7 +164,9 @@ public class ProductCode {
         String query = "SELECT * FROM PRODUCT_CODE";    // формирование запроса
         try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {   // 
            try (ResultSet resultSet = statement.executeQuery(query)) {
-               return getSelectQuery(resultSet);       // возвращение 
+             
+               System.out.println("Выбраны все коды базы данных...");
+               return getSelectQuery(resultSet);                    
            }
         }
     }
@@ -179,7 +181,14 @@ public class ProductCode {
         /*
          * TODO #10 Реализуйте метод getInsertQuery
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String query = "INSERT * FROM PRODUCT_CODE"; 
+        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {   // 
+           try (ResultSet resultSet = statement.executeQuery(query)) {
+             
+               System.out.println("Добавлены все коды базы данных...");
+               return getInsertQuery((Connection) resultSet);                    
+           }
+        }
     }
     /**
      * Возвращает запрос на обновление значений записи в таблице PRODUCT_CODE 

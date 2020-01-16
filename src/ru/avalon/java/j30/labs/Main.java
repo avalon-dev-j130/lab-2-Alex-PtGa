@@ -65,7 +65,7 @@ public class Main {
         /*
          * TODO #02 Реализуйте метод getUrl
          */
-        String url = "jdbc:derby://localhost:1527/LabDb_2";
+        String url = "jdbc:derby://localhost:1527/JavaDb_2";
         System.out.println("есть url...");
         return url;
         
@@ -105,9 +105,10 @@ public class Main {
         String url = getUrl();
         Properties usnamePas = getProperties();
 
-        String user = usnamePas.getProperty("database.user");
-        String password = usnamePas.getProperty("database.password");
+        String user = usnamePas.getProperty("database.user").trim();          
+        String password = usnamePas.getProperty("database.password").trim();   // от лишних пробелов
 
         return DriverManager.getConnection(url, user, password);
     }
 }
+//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//--**//
