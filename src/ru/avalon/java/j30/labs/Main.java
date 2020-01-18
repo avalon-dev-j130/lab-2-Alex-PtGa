@@ -24,6 +24,8 @@ public class Main {
      *
      * @param args the command line arguments
      */
+   private static final String CONFIG = "src\\resources\\config.properties";
+   
     public static void main(String[] args) throws SQLException, IOException {
         /* 
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
@@ -77,8 +79,7 @@ public class Main {
      * @return Объект класса {@link Properties}, содержащий параметры user и
      * password
      */
-    private static final String CONFIG = "src\\resources\\config.properties";
-
+    
     private static Properties getProperties() throws IOException {
         /*
          * TODO #03 Реализуйте метод getProperties
