@@ -18,15 +18,17 @@ public class ProductCode {
     static Connection connection = null;
 
     private static PreparedStatement getSelectQuery(ResultSet resultSet) throws SQLException {
+     PreparedStatement st = null;
         String query = "SELECT * FROM PRODUCT_CODE";
         try {
-            PreparedStatement st = connection.prepareStatement(query);
+            st = connection.prepareStatement(query);
             resultSet = st.executeQuery(query);
-//        return null;
+            while(resultSet!=null) {
+                System.out.println(new ProductCode(resultSet).toString());
+            }
         } catch (SQLException ex) {
-            System.out.println("Ошибка Statement ");
+            System.out.println("Ошибка PreparedStatement " + ex.getMessage());
         }
-
         return st;
     }
     /**
@@ -65,9 +67,14 @@ public class ProductCode {
         /*
          * TODO #05 реализуйте конструктор класса ProductCode
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+       try {
+            this.code = set.getString(1);
+            this.discountCode = set.
+            this.description = set.getString(3);
+        } catch (SQLException ex) {
+            System.out.println("Ошибка создания ProductCode из Resultset");
+        }
     }
-
     /**
      * Возвращает код товара
      *
