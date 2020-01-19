@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -201,7 +202,11 @@ public class ProductCode {
         /*
          * TODO #11 Реализуйте метод getUpdateQuery
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String query = "UPDATE PRODUCT_CODE SET DISCOUNT_CODE = ?,  DESCRIPTION = ? WHERE  PROD_CODE = ?";
+        PreparedStatement pst = connection.prepareStatement(query);
+        System.out.println("Все значения обновлены....");
+        return pst;
+//        throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     /**
@@ -217,7 +222,13 @@ public class ProductCode {
         /*
          * TODO #12 Реализуйте метод convert
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+          
+        Collection<ProductCode> prodCod = new ArrayList<>();
+        while(set.next()) {
+            prodCod.add(new ProductCode(set));
+        }
+        return new ArrayList(prodCod);
+//       throw new UnsupportedOperationException("Not implemented yet!");
     }
 
     /**
@@ -234,25 +245,45 @@ public class ProductCode {
         /*
          * TODO #13 Реализуйте метод save
          */
-// параметры String code, char discountCode, String description
-        try (Statement st = connection.createStatement()) {
-            String sql = "SELECT * FROM PRODUCT_CODE WHERE ID=" + code + ";";
-            ResultSet rs = st.executeQuery(sql);
-            if (rs.next()) {
-                //  такой объект есть, нужен UPDATE
-                System.out.println("Такой объект уже есть");
-                sql = "UPDATE PRODUCT SET code'" + code + "' discountCode = " + discountCode + "WHERE description = " + description + ";";
-                int n = st.executeUpdate(sql);
-                System.out.println("Изменено " + n + " строк");
-            } else {
-                //  Это новый объект для таблицы, нужен INSERT
-                //   если есть строчный параметр, то переводит в строчный параметр строку
-                sql = "INSERT INTO PRODUCT_CODE VALUES (" + code + "," + discountCode + "'," + description + ");";
-                int r = st.executeUpdate(sql);
-                System.out.println("Вставлено " + r + "стр.");
-            }
-        } catch (SQLException ex) {
-            System.out.println("Ошибка в save " + ex.getMessage());
+//        try (Statement st = connection.createStatement()) {
+//            String sql = "SELECT * FROM PRODUCT_CODE WHERE ID=" + code + ";";
+//            ResultSet rs = st.executeQuery(sql);
+//            if (rs.next()) {
+//                //  такой объект есть, нужен UPDATE
+//                System.out.println("Такой объект уже есть");
+//                sql = "UPDATE PRODUCT SET code'" + code + "' discountCode = " +
+//                        discountCode + "WHERE description = " + description + ";";
+//                int n = st.executeUpdate(sql);
+//                System.out.println("Изменено " + n + " строк");
+//            } else {
+//                //  Это новый объект для таблицы, нужен INSERT
+//                //   если есть строчный параметр, то переводит в строчный параметр строку
+//                sql = "INSERT INTO PRODUCT_CODE VALUES (" + code + ", " + discountCode +
+//                        ", " + description + "); ";
+//                int r = st.executeUpdate(sql);
+//                System.out.println("Вставлено " + r + "стр.");
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println("Ошибка в save " + ex.getMessage());
+//        }
+          Collection<ProductCode> codes = all(connection);
+        boolean isUpdate = false;
+        if (codes.contains(this)) {
+            isUpdate = true;
+        }
+        if (isUpdate){
+            PreparedStatement pst1 = getUpdateQuery(connection);
+            pst1.setString(1, String.valueOf(getDiscountCode()));
+            pst1.setString(2, getDescription());
+            pst1.setString(3, getCode());
+            pst1.executeUpdate();   
+        }
+        else{
+            PreparedStatement pst2 = getInsertQuery(connection);
+            pst2.setString(2, Character.toString(getDiscountCode()));
+            pst2.setString(3, getDescription());
+            pst2.setString(1, getCode());
+            pst2.execute();              
         }
     }
 
