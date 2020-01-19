@@ -14,23 +14,7 @@ import java.util.Collection;
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
 public class ProductCode {
-
-    static Connection connection = null;
-
-    private static PreparedStatement getSelectQuery(ResultSet resultSet) throws SQLException {
-     PreparedStatement st = null;
-        String query = "SELECT * FROM PRODUCT_CODE";
-        try {
-            st = connection.prepareStatement(query);
-            resultSet = st.executeQuery(query);
-            while(resultSet!=null) {
-                System.out.println(new ProductCode(resultSet).toString());
-            }
-        } catch (SQLException ex) {
-            System.out.println("Ошибка PreparedStatement " + ex.getMessage());
-        }
-        return st;
-    }
+    
     /**
      * Код товара
      */
@@ -68,9 +52,9 @@ public class ProductCode {
          * TODO #05 реализуйте конструктор класса ProductCode
          */
        try {
-            this.code = set.getString(1);
-            this.discountCode = set.
-            this.description = set.getString(3);
+            code = set.getString("PROD_CODE");
+            discountCode = set.getString("DISCOUNT_CODE").charAt(0);
+            description = set.getString("DESCRIPTION");
         } catch (SQLException ex) {
             System.out.println("Ошибка создания ProductCode из Resultset");
         }
