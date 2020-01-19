@@ -1,10 +1,9 @@
 package ru.avalon.java.j30.labs;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -244,28 +243,7 @@ public class ProductCode {
     public void save(Connection connection) throws SQLException {
         /*
          * TODO #13 Реализуйте метод save
-         */
-//        try (Statement st = connection.createStatement()) {
-//            String sql = "SELECT * FROM PRODUCT_CODE WHERE ID=" + code + ";";
-//            ResultSet rs = st.executeQuery(sql);
-//            if (rs.next()) {
-//                //  такой объект есть, нужен UPDATE
-//                System.out.println("Такой объект уже есть");
-//                sql = "UPDATE PRODUCT SET code'" + code + "' discountCode = " +
-//                        discountCode + "WHERE description = " + description + ";";
-//                int n = st.executeUpdate(sql);
-//                System.out.println("Изменено " + n + " строк");
-//            } else {
-//                //  Это новый объект для таблицы, нужен INSERT
-//                //   если есть строчный параметр, то переводит в строчный параметр строку
-//                sql = "INSERT INTO PRODUCT_CODE VALUES (" + code + ", " + discountCode +
-//                        ", " + description + "); ";
-//                int r = st.executeUpdate(sql);
-//                System.out.println("Вставлено " + r + "стр.");
-//            }
-//        } catch (SQLException ex) {
-//            System.out.println("Ошибка в save " + ex.getMessage());
-//        }
+         */      
        Collection<ProductCode> currentRecords = all(connection); 
         if (currentRecords.contains(this)) {
                 PreparedStatement pstuQ = getUpdateQuery(connection);                 
