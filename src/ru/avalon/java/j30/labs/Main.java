@@ -18,14 +18,15 @@ import java.util.Properties;
  *
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
-public class Main {    
+public class Main {
+
     /**
      * Точка входа в приложение
      *
      * @param args the command line arguments
      */
-   private static final String CONFIG = "src\\resources\\config.properties";
-   
+    private static final String CONFIG = "src\\resources\\config.properties";
+
     public static void main(String[] args) throws SQLException, IOException {
         /* 
          * TODO #01 Подключите к проекту все библиотеки, необходимые для соединения с СУБД.
@@ -70,7 +71,7 @@ public class Main {
         String url = "jdbc:derby://localhost:1527/JavaDb_2";
         System.out.println("есть url...");
         return url;
-        
+
     }
 
     /**
@@ -79,17 +80,16 @@ public class Main {
      * @return Объект класса {@link Properties}, содержащий параметры user и
      * password
      */
-    
     private static Properties getProperties() throws IOException {
         /*
          * TODO #03 Реализуйте метод getProperties
          */
         Properties configs = new Properties();
         try (FileInputStream file = new FileInputStream(CONFIG)) {
-
             configs.load(file);
+        } catch (IOException ex) {
+            System.out.println("не получили данные...");
         }
-// возвратим созданный экземпляр соглассно задания
         return configs;
     }
 
@@ -106,7 +106,7 @@ public class Main {
         String url = getUrl();
         Properties usnamePas = getProperties();
 
-        String user = usnamePas.getProperty("database.user").trim();          
+        String user = usnamePas.getProperty("database.user").trim();
         String password = usnamePas.getProperty("database.password").trim();   // от лишних пробелов
 
         return DriverManager.getConnection(url, user, password);

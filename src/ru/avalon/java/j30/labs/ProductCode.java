@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Класс описывает представление о коде товара и отражает соответствующую
@@ -14,7 +15,7 @@ import java.util.Collection;
  * @author Daniel Alpatov <danial.alpatov@gmail.com>
  */
 public class ProductCode {
-    
+
     /**
      * Код товара
      */
@@ -51,7 +52,7 @@ public class ProductCode {
         /*
          * TODO #05 реализуйте конструктор класса ProductCode
          */
-       try {
+        try {
             code = set.getString("PROD_CODE");
             discountCode = set.getString("DISCOUNT_CODE").charAt(0);
             description = set.getString("DESCRIPTION");
@@ -59,6 +60,7 @@ public class ProductCode {
             System.out.println("Ошибка создания ProductCode из Resultset");
         }
     }
+
     /**
      * Возвращает код товара
      *
@@ -123,23 +125,20 @@ public class ProductCode {
         /*
          * TODO #06 Реализуйте метод hashCode
          */
-        return super.hashCode();
+        return Objects.hash(code, discountCode, description);
     }
 
-    /**
-     * Сравнивает некоторый произвольный объект с текущим объектом типа
-     * {@link ProductCode}
-     *
-     * @param obj Объект, скоторым сравнивается текущий объект.
-     * @return true, если объект obj тождественен текущему объекту. В обратном
-     * случае - false.
-     */
     @Override
     public boolean equals(Object obj) {
         /*
          * TODO #07 Реализуйте метод equals
          */
-        return super.equals(obj);
+        if (obj instanceof ProductCode) {
+            if (obj.toString().equals(this.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -152,8 +151,8 @@ public class ProductCode {
         /*
          * TODO #08 Реализуйте метод toString
          */
-  
-        return "Product_Code{" + "code=" + code + ", discountCode=" + discountCode + ", description=" + description + "}";
+        return "Product_Code{" + "code=" + code + ", discountCode="
+                + discountCode + ", description=" + description + "}";
     }
 
     /**
@@ -167,19 +166,11 @@ public class ProductCode {
         /*
          * TODO #09 Реализуйте метод getSelectQuery
          */
-        /**
-         * PreparedStatement Этот интерфейс используется в случае, когда мы
-         * планируем использовать SQL – выражения множество раз. Он принимает
-         * параметры во время работы программы.
-         */
-        String query = "SELECT * FROM PRODUCT_CODE";    // формирование запроса
-        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {   // 
-            try (ResultSet resultSet = statement.executeQuery(query)) {
 
-                System.out.println("Выбраны все коды базы данных...");
-                return getSelectQuery(resultSet);
-            }
-        }
+        String query = "SELECT * FROM PRODUCT_CODE";    // формирование запроса
+        PreparedStatement pst = connection.prepareCall(query);
+        System.out.println("Выбраны все коды базы данных...");
+        return pst;
     }
 
     /**
@@ -194,13 +185,9 @@ public class ProductCode {
          * TODO #10 Реализуйте метод getInsertQuery
          */
         String query = "INSERT * FROM PRODUCT_CODE";
-        try (PreparedStatement statement = (PreparedStatement) connection.createStatement()) {   // 
-            try (ResultSet resultSet = statement.executeQuery(query)) {
-
-                System.out.println("Добавлены все коды базы данных...");
-                return getInsertQuery((Connection) resultSet);
-            }
-        }
+        PreparedStatement pst = connection.prepareStatement(query);
+        System.out.println("Добавлены все коды базы данных...");
+        return pst;
     }
 
     /**
