@@ -71,7 +71,6 @@ public class Main {
         String url = "jdbc:derby://localhost:1527/JavaDb_2";
         System.out.println("есть url...");
         return url;
-
     }
 
     /**
