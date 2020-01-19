@@ -183,8 +183,8 @@ public class ProductCode {
         /*
          * TODO #10 Реализуйте метод getInsertQuery
          */
-        String query =  "insert into PRODUCT_CODE(PROD_CODE, DISCOUNT_CODE, DESCRIPTION) "
-                    + "values(?, ?, ?)";
+        String query = "insert into PRODUCT_CODE(PROD_CODE, DISCOUNT_CODE, DESCRIPTION) "
+                + "values(?, ?, ?)";
         PreparedStatement pst = connection.prepareStatement(query);
         System.out.println("Добавлены все коды базы данных...");
         return pst;
@@ -221,9 +221,9 @@ public class ProductCode {
         /*
          * TODO #12 Реализуйте метод convert
          */
-          
+
         Collection<ProductCode> prodCod = new ArrayList<>();
-        while(set.next()) {
+        while (set.next()) {
             prodCod.add(new ProductCode(set));
         }
         return new ArrayList(prodCod);
@@ -243,22 +243,23 @@ public class ProductCode {
     public void save(Connection connection) throws SQLException {
         /*
          * TODO #13 Реализуйте метод save
-         */      
-       Collection<ProductCode> currentRecords = all(connection); 
+         */
+        Collection<ProductCode> currentRecords = all(connection);
         if (currentRecords.contains(this)) {
-                PreparedStatement pstuQ = getUpdateQuery(connection);                 
-                    pstuQ.setString(1, Character.toString(this.discountCode));
-                    pstuQ.setString(2, this.description);
-                    pstuQ.setString(3, this.code);  
-                pstuQ.executeUpdate();            
+            PreparedStatement pstuQ = getUpdateQuery(connection);
+            pstuQ.setString(1, Character.toString(this.discountCode));
+            pstuQ.setString(2, this.description);
+            pstuQ.setString(3, this.code);
+            pstuQ.executeUpdate();
         } else {
-                PreparedStatement psInsert = getInsertQuery(connection);
-                    psInsert.setString(1, this.code);                   
-                    psInsert.setString(2, Character.toString(this.discountCode));
-                    psInsert.setString(3, this.description);
-                psInsert.executeUpdate();             
+            PreparedStatement psInsert = getInsertQuery(connection);
+            psInsert.setString(1, this.code);
+            psInsert.setString(2, Character.toString(this.discountCode));
+            psInsert.setString(3, this.description);
+            psInsert.executeUpdate();
         }
-        }
+    }
+
     /**
      * Возвращает все записи таблицы PRODUCT_CODE в виде коллекции объектов типа
      * {@link ProductCode}
