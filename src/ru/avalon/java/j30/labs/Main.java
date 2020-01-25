@@ -87,7 +87,7 @@ public class Main {
         try (FileInputStream file = new FileInputStream(CONFIG)) {
             configs.load(file);
         } catch (IOException ex) {
-            System.out.println("не получили данные...");
+            System.out.println("не получили данные..." + ex);
         }
         return configs;
     }

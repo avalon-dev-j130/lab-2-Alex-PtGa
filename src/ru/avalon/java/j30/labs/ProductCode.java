@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 /**
  * Класс описывает представление о коде товара и отражает соответствующую
@@ -201,7 +204,7 @@ public class ProductCode {
         /*
          * TODO #11 Реализуйте метод getUpdateQuery
          */
-        String query = "UPDATE PRODUCT_CODE SET DISCOUNT_CODE = ?,  DESCRIPTION = ? WHERE  PROD_CODE = ?";
+        String query = "UPDATE PRODUCT_CODE SET DISCOUNT_CODE = ?, DESCRIPTION = ? WHERE  PROD_CODE = ?";
         PreparedStatement pst = connection.prepareStatement(query);
         System.out.println("Все значения обновлены....");
         return pst;
@@ -244,33 +247,85 @@ public class ProductCode {
         /*
          * TODO #13 Реализуйте метод save
          */
-        Collection<ProductCode> currentRecords = all(connection);
-        if (currentRecords.contains(this)) {
-            PreparedStatement pstuQ = getUpdateQuery(connection);
-            pstuQ.setString(1, Character.toString(this.discountCode));
-            pstuQ.setString(2, this.description);
-            pstuQ.setString(3, this.code);
-            pstuQ.executeUpdate();
-        } else {
-            PreparedStatement psInsert = getInsertQuery(connection);
-            psInsert.setString(1, this.code);
-            psInsert.setString(2, Character.toString(this.discountCode));
-            psInsert.setString(3, this.description);
-            psInsert.executeUpdate();
+        System.out.println("Соединение в save: " + connection);
+        // проверить наличие в БД
+//        Statement st = null;
+//        try {
+//            st = connection.createStatement();            
+//        } catch (SQLException ex) {
+//            System.out.println("Ошибка создания st " + ex.getMessage());            
+//        }
+//        ResultSet rs = null;
+//        PreparedStatement pst = null;
+
+        // проверить наличие в базе ID
+        //  PreparedStatement st = getSelectQuery(conn);
+        Statement st = null;
+        try {
+            st = connection.createStatement();
+        } catch (SQLException ex) {
+            System.out.println("Ошибка создания st " + ex.getMessage());
         }
+        ResultSet rs = null;
+        PreparedStatement pst = null;
+        try {
+            rs = st.executeQuery("SELECT * FROM PRODUCT_CODE WHERE PROD_CODE =  'code'");
+       
+        } catch (SQLException ex) {
+ //           Logger.getLogger(ProductCode.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(rs);
+            System.out.println("Ошибка ...что то в " + ex.getMessage());
+        }
+        try {
+            st.close();
+            if (rs.next()) {
+                // есть такой продукт - делаем UPDATE
+                pst = getUpdateQuery(connection);
+                pst.setString(1, code);
+                pst.setDouble(2, discountCode);
+                pst.setString(3, description);
+            } else {
+                // нет такого в базе - делаем INSERT
+                pst = getInsertQuery(connection);
+                pst.setString(1, code);
+                pst.setDouble(2, discountCode);
+            }
+            pst.executeUpdate();
+            pst.close();
+        } catch (SQLException ex) {
+ //           Logger.getLogger(ProductCode.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Ошибка в ....");
+        }
+//"code=" + code + ", discountCode="
+        //             + discountCode + ", description=" + description + "}";
+
+//        Collection<ProductCode> currentRecords = all(connection);
+//        if (currentRecords.contains(this)) {
+//            PreparedStatement pstuQ = getUpdateQuery(connection);
+//            pstuQ.setString(1, Character.toString(this.discountCode));
+//            pstuQ.setString(2, this.description);
+//            pstuQ.setString(3, this.code);
+//            pstuQ.executeUpdate();
+//        } else {
+//            PreparedStatement psInsert = getInsertQuery(connection);
+//            psInsert.setString(1, this.code);
+//            psInsert.setString(2, Character.toString(this.discountCode));
+//            psInsert.setString(3, this.description);
+//            psInsert.executeUpdate();
     }
 
-    /**
-     * Возвращает все записи таблицы PRODUCT_CODE в виде коллекции объектов типа
-     * {@link ProductCode}
-     *
-     * @param connection действительное соединение с базой данных
-     * @return коллекция объектов типа {@link ProductCode}
-     * @throws SQLException
-     */
-    public static Collection<ProductCode> all(Connection connection) throws SQLException {
-        try (PreparedStatement statement = getSelectQuery(connection)) {
-            try (ResultSet result = statement.executeQuery()) {
+/**
+ * Возвращает все записи таблицы PRODUCT_CODE в виде коллекции объектов типа
+ * {@link ProductCode}
+ *
+ * @param connection действительное соединение с базой данных
+ * @return коллекция объектов типа {@link ProductCode}
+ * @throws SQLException
+ */
+public static Collection<ProductCode> all(Connection connection) throws SQLException {
+       
+    PreparedStatement statement = getSelectQuery(connection); {
+            ResultSet result = statement.executeQuery(); {
                 return convert(result);
             }
         }
