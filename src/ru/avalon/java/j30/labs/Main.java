@@ -33,11 +33,11 @@ public class Main {
          */
         try (Connection connection = getConnection()) {
             System.out.println("есть соединение...");
-            ProductCode code = new ProductCode("MO", 'N', "Movies");
+            ProductCode code = new ProductCode("Mi", 'P', "MSovies");
             code.save(connection);
             printAllCodes(connection);
 
-            code.setCode("MV");
+            code.setCode("Mi");
             code.save(connection);
             printAllCodes(connection);
         }
